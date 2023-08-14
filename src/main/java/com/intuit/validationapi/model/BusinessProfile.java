@@ -8,8 +8,6 @@ import java.util.List;
 @Data
 @Builder
 public class BusinessProfile {
-
-    private String id;
     private String companyName;
     private String legalName;
     private Address businessAddress;
@@ -17,5 +15,5 @@ public class BusinessProfile {
     private List<TaxIdentifier> taxIdentifiers;
     private String email;
     private String website;
-    private List<SubscriptionProducts> products;
+    private String product;
 }

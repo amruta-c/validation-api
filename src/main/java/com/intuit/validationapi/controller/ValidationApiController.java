@@ -16,8 +16,8 @@ public class ValidationApiController {
         this.validationService = validationService;
     }
 
-    @PostMapping(value = "/{product}", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<ValidationResponse> validate(@PathVariable String product, @RequestBody BusinessProfile profile) {
-        return validationService.validate(profile, product);
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    public ResponseEntity<ValidationResponse> validate(@RequestBody BusinessProfile profile) {
+        return validationService.validate(profile, profile.getProduct());
     }
 }

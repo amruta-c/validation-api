@@ -19,7 +19,7 @@ public class ValidationService {
                         .validationMessage("Data is valid. Validation done by " + product + " product")
                         .build());
             } else {
-                return ResponseEntity.ok(ValidationResponse.builder()
+                return ResponseEntity.badRequest().body(ValidationResponse.builder()
                         .productId(product)
                         .status(ValidationStatus.FAILED)
                         .validationMessage("Invalid data. According to field configuration, it should comply " +
