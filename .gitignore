@@ -27,10 +27,11 @@ hs_err_pid*
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
+build/reports/*
 !**/src/main/**/build/
 !**/src/test/**/build/
 target/
-.gradle/
-.idea/
+.gradle/*
+.idea/*
+build/*
 
