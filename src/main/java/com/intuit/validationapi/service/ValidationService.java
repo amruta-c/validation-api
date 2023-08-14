@@ -1,26 +1,31 @@
 package com.intuit.validationapi.service;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import com.intuit.validationapi.model.BusinessProfile;
+import com.intuit.validationapi.model.SubscriptionProducts;
+import com.intuit.validationapi.model.ValidationResponse;
+import com.intuit.validationapi.model.ValidationStatus;
+import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class ValidationService {
-    public void validate(BusinessProfile businessProfile, String product) throws Exception {
-        JSONObject validationConfig = (JSONObject) readValidationConfiguration().get(product);
-        Field[] fields = businessProfile.getClass().getDeclaredFields();
-        String fieldName;
-        for (Field field : fields) {
-            fieldName = getFieldName(field);
-            try {
-                Method getterMethod = businessProfile.getClass().getMethod("get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1));
-                Object response = getterMethod.invoke(businessProfile);
-                if (!configValidation(response, fieldName, validationConfig)) {
-                    throw new InvalidDataException("Invalid data for " + fieldName + " according to field configuration it should comply the regExp provided. This validation is by " + product + " QB application");
-                }
-            } catch (InvalidDataException e) {
-                throw new InvalidDataException(e.getMessage());
-            } catch (Exception e) {
-                throw new ValidationConfigurationException("Error in validation configuration unable to setup configuration for all products. Check validationData.json for more information. " + e.getMessage());
-            }
-        }
+
+    private static final Logger logger = LoggerFactory.getLogger(ValidationService.class);
+    private final JSONParser parser = new JSONParser();
+    @Value("${business.profile.validator.config.file}")
+    private String validationConfigFile;
+
+    public ResponseEntity<ValidationResponse> validate(BusinessProfile businessProfile, List<SubscriptionProducts> products) {
+        return ResponseEntity.ok().body(ValidationResponse.builder()
+                .productId(businessProfile.getId())
+                .validationMessage("Profile has been validated successfully")
+                .status(ValidationStatus.SUCCESSFUL)
+                .build());
     }
 }

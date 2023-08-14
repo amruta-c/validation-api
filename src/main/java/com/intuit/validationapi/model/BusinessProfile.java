@@ -17,5 +17,5 @@ public class BusinessProfile {
     private List<TaxIdentifier> taxIdentifiers;
     private String email;
     private String website;
-    private List<SubscriptionProducts> subscriptionProducts;
+    private List<SubscriptionProducts> products;
 }
