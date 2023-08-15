@@ -1,0 +1,76 @@
+swagger: '2.0'
+info:
+  title: validation-v1
+  version: 1.0.0
+  description: Business Profile Validation API
+host: localhost:8080
+basePath: /
+produces:
+  - application/json
+paths:
+  /validate:
+    post:
+      summary: Validate Business Profile Against Multiple Products
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/BusinessProfile'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/ValidationResponse'
+definitions:
+  Address:
+    type: object
+    properties:
+      line1:
+        type: string
+      line2:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      zip:
+        type: string
+      country:
+        type: string
+
+  BusinessProfile:
+    type: object
+    properties:
+      companyName:
+        type: string
+      legalName:
+        type: string
+      businessAddress:
+        $ref: '#/definitions/Address'
+      legalAddress:
+        $ref: '#/definitions/Address'
+      taxID:
+        type: string
+      email:
+        type: string
+      website:
+        type: string
+      product:
+        type: string
+      taxIdentifiers:
+        type: array
+        items:
+          type: string
+
+  ValidationResponse:
+    type: object
+    properties:
+      productId:
+        type: string
+      status:
+        type: string
+      validationMessage:
+        type: string
