@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BusinessProfile {
+    private Long id;
     private String companyName;
     private String legalName;
     private Address businessAddress;
@@ -18,5 +19,4 @@ public class BusinessProfile {
     private List<TaxIdentifier> taxIdentifiers;
     private String email;
     private String website;
-    private String product;
 }

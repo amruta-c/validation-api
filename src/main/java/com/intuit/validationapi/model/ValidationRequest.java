@@ -5,12 +5,15 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ValidationResponse {
-    private Long profileId;
+public class ValidationRequest {
+    @NotNull
+    private BusinessProfile businessProfile;
+    @NotBlank
     private String product;
-    private ValidationStatus status;
-    private String validationMessage;
 }

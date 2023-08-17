@@ -14,22 +14,26 @@ public class ValidationService {
         try {
             if (validateBusinessProfile(profile)) {
                 return ResponseEntity.ok(ValidationResponse.builder()
-                        .productId(product)
+                        .profileId(profile.getId())
+                        .product(product)
                         .status(ValidationStatus.SUCCESSFUL)
-                        .validationMessage("Data is valid. Validation done by " + product + " product")
+                        .validationMessage("Data is valid. Validation done for " + product + " product")
                         .build());
             } else {
                 return ResponseEntity.badRequest().body(ValidationResponse.builder()
-                        .productId(product)
+                        .profileId(profile.getId())
+                        .product(product)
                         .status(ValidationStatus.FAILED)
                         .validationMessage("Invalid data. According to field configuration, it should comply " +
-                                "with the provided regular expression. This validation is performed by " + product + " application.")
+                                "with the provided regular expression. This validation is performed for " + product +
+                                " application.")
                         .build());
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(ValidationResponse.builder()
-                            .productId(product)
+                            .profileId(profile.getId())
+                            .product(product)
                             .status(ValidationStatus.FAILED)
                             .validationMessage("An error occurred during validation: " + e.getMessage())
                             .build());
